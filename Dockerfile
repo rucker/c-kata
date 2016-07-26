@@ -17,8 +17,8 @@ RUN cd /usr/src/gtest && \
     cp *.a /usr/lib
 # ------------------------------------
 
-RUN apt-get install -y vim
-ENV APP_HOME /kata
+RUN apt-get install -y vim python-pip
+ENV APP_HOME /root/code/kata
 
 # ------------ Build check ------------
 WORKDIR /tmp
@@ -32,7 +32,16 @@ RUN git clone https://github.com/libcheck/check.git && \
   ldconfig
 # -------------------------------------
 
-RUN mkdir $APP_HOME
+# ---------- Dotfiles -----------------
+WORKDIR ~
+RUN mkdir code && \
+    cd code && \
+    git clone https://github.com/rucker/dotfiles.git && \
+    pip install mock enum34 && \
+    python ./dotfiles/dotfiles/dotfiles.py
+# -------------------------------------
+
+RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
 #ADD . $APP_HOME/
