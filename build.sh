@@ -1,4 +1,4 @@
 #!/bin/bash
 
-docker build -t c-kata .
+docker build -t ubuntu-dev .
 
