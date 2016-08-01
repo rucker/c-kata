@@ -17,7 +17,7 @@ RUN cd /usr/src/gtest && \
     cp *.a /usr/lib
 # ------------------------------------
 
-RUN apt-get install -y vim python-pip
+RUN apt-get install -y vim python-pip tree htop
 ENV APP_HOME /root/code/kata
 
 # ------------ Build check ------------
