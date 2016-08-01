@@ -1,10 +1,10 @@
-FROM ubuntu:latest
+FROM ubuntu:14.04
 
 RUN apt-get update -qq && \
     apt-get upgrade -y && \
     apt-get install -y build-essential
 RUN apt-get install -y cmake libgtest-dev valgrind \
-    git pkg-config automake libtool
+    git pkg-config automake libtool check
 
 # Man pages and indent to keep myself sane
 RUN apt-get install -y man-db indent
