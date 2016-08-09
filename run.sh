@@ -1,4 +1,4 @@
 #!/bin/bash
 
-DEST=/home/"${whoami}"/code/"${PWD##*/}"
-docker run -it -v `pwd`:$DEST ubuntu-dev
+WORKING_DIR='/root/code/kata'
+docker run -it -w $WORKING_DIR -v `pwd`:$WORKING_DIR ubuntu-dev

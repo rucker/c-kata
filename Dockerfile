@@ -1,26 +1,19 @@
 FROM ubuntu:14.04
 
+env HOME=/root
+
+# Set the timezone
+RUN sudo echo "America/New_York" > /etc/timezone
+RUN sudo dpkg-reconfigure -f noninteractive tzdata
+
+# Upgrade, install packages
 RUN apt-get update -qq && \
-    apt-get upgrade -y && \
-    apt-get install -y build-essential
-RUN apt-get install -y cmake libgtest-dev valgrind \
-    git pkg-config automake libtool check
+    apt-get upgrade -y
+RUN apt-get install -y build-essential git pkg-config \
+    automake libtool check man-db indent indent texinfo \
+    vim python-pip tree htop
 
-# Man pages and indent to keep myself sane
-RUN apt-get install -y man-db indent
-RUN apt-get install -y texinfo
-
-# ----------- Build gtest ------------
-RUN cd /usr/src/gtest && \
-    cmake CMakeLists.txt && \
-    make && \
-    cp *.a /usr/lib
-# ------------------------------------
-
-RUN apt-get install -y vim python-pip tree htop
-ENV APP_HOME /root/code/kata
-
-# ------------ Build check ------------
+# Build check
 WORKDIR /tmp
 RUN git clone https://github.com/libcheck/check.git && \
   cd check && \
@@ -30,18 +23,13 @@ RUN git clone https://github.com/libcheck/check.git && \
   make && \
   make install && \
   ldconfig
-# -------------------------------------
 
-# ---------- Dotfiles -----------------
-WORKDIR ~
-RUN mkdir code && \
-    cd code && \
+# Set up Dotfiles
+WORKDIR $HOME
+RUN mkdir code && cd code && \
     git clone https://github.com/rucker/dotfiles.git && \
     pip install mock enum34 && \
     python ./dotfiles/dotfiles/dotfiles.py
-# -------------------------------------
 
-RUN mkdir -p $APP_HOME
-WORKDIR $APP_HOME
-
-#ADD . $APP_HOME/
+# Configure Git
+RUN git config --global user.name "Rick Ucker"
