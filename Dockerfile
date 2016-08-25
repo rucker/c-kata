@@ -10,7 +10,7 @@ RUN sudo dpkg-reconfigure -f noninteractive tzdata
 RUN apt-get update -qq && \
     apt-get upgrade -y
 RUN apt-get install -y build-essential git pkg-config \
-    automake libtool check man-db indent indent texinfo \
+    automake libtool valgrind man-db indent texinfo \
     vim python-pip tree htop
 
 # Build check
