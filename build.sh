@@ -1,4 +1,3 @@
 #!/bin/bash
 
-docker build -t ubuntu-dev .
-
+docker build --build-arg user=$USER -t ubuntu-dev .
